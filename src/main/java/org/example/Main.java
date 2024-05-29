@@ -20,13 +20,19 @@ public class Main {
         employees.add(new Employee(1023L, "Carly", "Agar", LocalDate.of(2014,5,16),842000.75, new PensionPlan("SM2307", LocalDate.of(2019,11,4), 1555.50)));
         employees.add(new Employee(1024L, "Wesley", "Schneider", LocalDate.of(2019,5,2),74500.00, null));
 
-        List<Employee> monthlyUpcomingEnrollees= getMonthlyUpcomingEnrollees(employees);
-
         //sort the employees
-        List<Employee> sortedEmployees = monthlyUpcomingEnrollees.stream().sorted(Comparator.comparing(Employee::getLastName))
+        List<Employee> sortedEmployees = employees.stream().sorted(Comparator.comparing(Employee::getLastName))
                 .sorted(Comparator.comparing((Employee::getYearlySalary)).reversed())
                 .collect(Collectors.toList());
+
+        System.out.println("Sorted employees:");
         printEmployeesInJson(sortedEmployees);
+        System.out.println();
+
+        List<Employee> monthlyUpcomingEnrollees= getMonthlyUpcomingEnrollees(sortedEmployees);
+
+        System.out.println("Monthly Upcoming Enrollees report:");
+        printEmployeesInJson(monthlyUpcomingEnrollees);
     }
 
     private static List<Employee> getMonthlyUpcomingEnrollees(List<Employee> employees) {
